@@ -11,3 +11,10 @@ def load_data(path):
     return data
 
 
+def correct_data(data: list) -> list:
+    temp_data = []
+    for item in data:
+        if 'state' in item:
+            if item['state'] == "EXECUTED":
+                temp_data.append(item)
+    return temp_data
