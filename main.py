@@ -1,8 +1,5 @@
 from utils import *
-
-
-DATA_PATH = os.path.join('data/operations.json')
-NUMBER_OPERATION_EXECUTED = 5
+from config import *
 
 def main():
     #Загружаем данные
@@ -16,7 +13,6 @@ def main():
         data_formated = formatted_data(data_last_executed)
         for item in data_formated:
             print(item)
-
 
 if __name__ == '__main__':
     main()
