@@ -53,3 +53,9 @@ operations.json
 - [ ]  Тесты написали на `pytest` или `unittest`.
 - [ ]  Проект структурированный, читаемый, каждая функция — не более 50 строк.
 - [ ]  Работа с файлом ведется через библиотеку json
+
+### Описание config.py
+
+DATA_PATH = os.path.join('data/operations.json') - путь к json файлу с данными 
+
+NUMBER_OPERATION_EXECUTED = 5 - количество выводимых последних операций
