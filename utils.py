@@ -1,7 +1,6 @@
 import json
 import os.path
 
-
 def load_data(path):
     # Загружаем данные из файла
     if not os.path.exists(path):
@@ -18,7 +17,7 @@ def correct_data(data: list) -> list:
             temp_data.append(item)
     return temp_data
 
-def last_executed(data: list, number) -> list:
+def last_executed(data: list, number: int) -> list:
     #1- отсортировать по дате
     #2 - вернуть последние элементы по количеству number
     data.sort(key=lambda element: element["date"], reverse=True)
