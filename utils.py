@@ -2,7 +2,11 @@ import json
 import os.path
 
 def load_data(path):
-    # Загружаем данные из файла
+    """
+    Загружает данные из файла json
+    :param path: путь к файлу json
+    :return: list словарей с даннфми
+    """
     if not os.path.exists(path):
         return None
     with open(path, 'r', encoding='utf-8') as file:
@@ -11,6 +15,11 @@ def load_data(path):
 
 
 def correct_data(data: list) -> list:
+    """
+    Фильтруем данные, оставляем только те у которых поле state = "EXECUTED"
+    :param data: list словарей с данными
+    :return: отфильтрованный list словарей
+    """
     temp_data = []
     for item in data:
         if 'state' in item and item['state'] == "EXECUTED":
@@ -18,17 +27,26 @@ def correct_data(data: list) -> list:
     return temp_data
 
 def last_executed(data: list, number: int) -> list:
-    #1- отсортировать по дате
-    #2 - вернуть последние элементы по количеству number
+    """
+    Оставляем только последние операции в количестве number, в порядке убывания по дате
+    :param data: отфильтрованные данные
+    :param number: количество последних операций
+    :return: list словарей с последними операциями
+    """
     data.sort(key=lambda element: element["date"], reverse=True)
     temp_data = data[:number]
     return temp_data
 
 def formatted_data(data: list) -> list:
+    """
+    Превращаем данные в читабельный формат согласно ТЗ
+    :param data: list словарей с последними операциями
+    :return: list стрингов
+    """
     return_data=[]
     for item in data:
         date = f'{item["date"][8:10]}.{item["date"][5:7]}.{item["date"][:4]}'
-        str1 = date + ' ' + item["description"]
+        str1 = f'{date} {item["description"]}'
 
         if 'from' in item:
             sender = item["from"]
@@ -37,7 +55,7 @@ def formatted_data(data: list) -> list:
         else:
             recipient = item["to"]
             str2 = f"-> {format_score(recipient)}"
-        str3 = item["operationAmount"]["amount"] + ' ' + item["operationAmount"]["currency"]["name"]
+        str3 = f'{item["operationAmount"]["amount"]} {item["operationAmount"]["currency"]["name"]}'
         return_data.append(f"""\
 {str1}
 {str2}
@@ -47,6 +65,14 @@ def formatted_data(data: list) -> list:
 
 
 def format_score(score_str: str) -> str:
+    """
+    Получаем стринг и форматируем его в нужном формате
+    Счет 90424923579946435907 -> Счет **3590
+    Maestro 7810846596785568 -> Maestro 7810 84** **** 5568
+    Visa Classic 2842878893689012 -> Visa Classic 2842 87** **** 9012
+    :param score_str: стринг
+    :return: отформатированный стринг
+    """
     temp_str = score_str.split()
     if temp_str[0] == 'Счет':
         return f'{temp_str[0]} **{temp_str[1][-5:-1]}'
