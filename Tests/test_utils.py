@@ -96,7 +96,7 @@ def begin_data():
 def test_load_data():
     data = load_data(os.path.join('./data/operations.json'))
     assert isinstance(data, list)
-    assert load_data(os.path.join(' ')) == None
+    assert load_data(os.path.join(' ')) is None
 
 
 def test_format_score():
