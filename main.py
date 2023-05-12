@@ -1,16 +1,19 @@
-# This is a sample Python script.
+from utils import *
+from config import *
 
-# Press Shift+F10 to execute it or replace it with your code.
-# Press Double Shift to search everywhere for classes, files, tool windows, actions, and settings.
+def main():
+    #Загружаем данные
+    data = load_data(DATA_PATH)
+    if data is None:
+        print("Не удалось прочитать файл с данными либо он отсутствует или не верно указан путь")
+    else:
+        #Данные прочитаны, дальше основная работа
+        data_correct = correct_data(data)
+        data_last_executed = last_executed(data_correct, NUMBER_OPERATION_EXECUTED)
+        data_formated = formatted_data(data_last_executed)
+        for item in data_formated:
+            print(item)
 
-
-def print_hi(name):
-    # Use a breakpoint in the code line below to debug your script.
-    print(f'Hi, {name}')  # Press Ctrl+F8 to toggle the breakpoint.
-
-
-# Press the green button in the gutter to run the script.
 if __name__ == '__main__':
-    print_hi('PyCharm')
+    main()
 
-# See PyCharm help at https://www.jetbrains.com/help/pycharm/
